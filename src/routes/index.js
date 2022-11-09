@@ -1,17 +1,23 @@
-import HomePageVue from "@/components/HomePage.vue"
-import ThreadShowPageVue from "@/components/ThreadShowPage.vue"
+import HomePage from "@/page/HomePage.vue"
+import ThreadShow from "@/page/ThreadShow.vue"
+import NotFound from "@/page/NotFound.vue"
 import { createRouter, createWebHistory } from "vue-router"
 
 const routes = [{
-    name: "",
+    name: "Home",
     path: "/",
-    component: HomePageVue
+    component: HomePage
 },
 {
     name: "threadShow",
     path: "/thread/:id",
-    component: ThreadShowPageVue,
+    component: ThreadShow,
     props: true
+},
+{
+    name: "NotFound",
+    path: "/:pathMatch(.*)*",
+    component: NotFound,
 }
 ]
 

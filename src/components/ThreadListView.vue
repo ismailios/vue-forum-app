@@ -1,11 +1,15 @@
 <template>
-  <div class="col-full">
+  <div class="col-full" v-if="threads">
     <div class="thread-list">
       <h2 class="list-title">threads</h2>
       <div v-for="thread in threads" :key="thread.id" class="thread">
         <div>
           <p>
-            <a :href="`/thread/${thread.id}`"> {{ thread.title }}</a>
+            <router-link
+              :to="{ name: 'threadShow', params: { id: thread.id } }"
+            >
+              {{ thread.title }}</router-link
+            >
           </p>
           <p class="text-faded text-xsmall">
             By <a href="">{{ userById(thread.userId).name }}</a
