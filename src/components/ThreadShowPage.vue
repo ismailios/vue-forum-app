@@ -1,6 +1,5 @@
 <template>
-  <ThreadListView :threads="threads" />
-  <!-- <div v-for="thread in threads" :key="thread.id" class="col-large push-top">
+  <div class="col-large push-top">
     <h1>{{ thread.title }}</h1>
     <div class="post-list">
       <div v-for="postId in thread.posts" :key="postId" class="post">
@@ -29,15 +28,19 @@
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
 </template>
 
 <script>
 import dataSource from "../data.json";
-import ThreadListView from "../components/ThreadListView.vue";
 
 export default {
-  components: { ThreadListView },
+  props: {
+    id: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
       threads: dataSource.threads,
@@ -45,7 +48,14 @@ export default {
       users: dataSource.users,
     };
   },
-
+  computed: {
+    thread() {
+      //Using Props (must add props:true in route)
+      return this.threads.find((thread) => thread.id === this.id);
+      //Using $route.params.id
+      //   return this.threads.find((thread) => thread.id === this.$route.params.id);
+    },
+  },
   methods: {
     postbyId(postId) {
       return this.posts.find((p) => p.id === postId);
