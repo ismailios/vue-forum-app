@@ -1,5 +1,5 @@
 <template>
-  <div class="col-full" v-if="threads">
+  <div class="col-full" v-if="threads" key="threads">
     <div class="thread-list">
       <h2 class="list-title">threads</h2>
       <div v-for="thread in threads" :key="thread.id" class="thread">
@@ -13,7 +13,7 @@
           </p>
           <p class="text-faded text-xsmall">
             By <a href="">{{ userById(thread.userId).name }}</a
-            >, {{ thread.publishedAt }}
+            >, <AppDate :time-stamp="thread.publishedAt" />
           </p>
         </div>
         <div class="activity">
@@ -27,7 +27,9 @@
             <p class="text-xsmall">
               By <a href="#">{{ userById(thread.userId).name }}</a>
             </p>
-            <div class="text-faded text-xsmall">{{ thread.publishedAt }}</div>
+            <div class="text-faded text-xsmall">
+              <AppDate :time-stamp="thread.publishedAt" />
+            </div>
           </div>
         </div>
       </div>
@@ -37,8 +39,12 @@
 
 <script>
 import dataSource from "../data.json";
+// import AppDate from "../components/AppDate.vue";
 
 export default {
+  // components: {
+  //   AppDate,
+  // },
   props: {
     threads: {
       type: Array,
@@ -47,7 +53,6 @@ export default {
   },
   data() {
     return {
-      //   threads: dataSource.threads,
       posts: dataSource.posts,
       users: dataSource.users,
     };

@@ -2,22 +2,7 @@
   <div class="col-large push-top" v-if="thread">
     <h1>{{ thread.title }}</h1>
     <PostList :posts="threadPosts" />
-    <div class="col-full">
-      <form @submit.prevent="addPost">
-        <div class="form-group">
-          <textarea
-            v-model="newPost"
-            name=""
-            id=""
-            rows="10"
-            class="form-input"
-          ></textarea>
-        </div>
-        <div class="form-actions">
-          <button class="btn-blue">Submit Post</button>
-        </div>
-      </form>
-    </div>
+    <post-editor @save="addPost" />
   </div>
 
   <div v-else class="col-full text-center">no thread found</div>
@@ -26,10 +11,12 @@
 <script>
 import dataSource from "../data.json";
 import PostList from "../components/PostList.vue";
+import PostEditor from "@/components/PostEditor.vue";
 
 export default {
   components: {
     PostList,
+    PostEditor,
   },
   props: {
     id: {
@@ -56,19 +43,10 @@ export default {
     },
   },
   methods: {
-    addPost() {
-      const postId = "dhdhd" + Math.random();
-      const post = {
-        id: postId,
-        publishedAt: Math.floor(Date.now() / 1000),
-        text: this.newPost,
-        threadId: this.id,
-        userId: "ALXhxjwgY9PinwNGHpfai6OWyDu2",
-      };
-
+    addPost({ post }) {
+      post.threadId = this.id;
       this.posts.push(post);
-      this.thread.posts.push(postId);
-      this.newPost = "";
+      this.thread.posts.push(post.id);
     },
   },
 };

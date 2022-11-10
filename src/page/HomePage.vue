@@ -1,28 +1,20 @@
 <template>
-  <ThreadListView :threads="threads" />
+  <!-- <ThreadListView :threads="threads" /> -->
+  <ForumList :forums="forums" />
 </template>
 
 <script>
 import dataSource from "../data.json";
-import ThreadListView from "../components/ThreadListView.vue";
+// import ThreadListView from "../components/ThreadListView.vue";
+import ForumList from "../components/ForumList.vue";
 
 export default {
-  components: { ThreadListView },
+  components: { ForumList },
   data() {
     return {
       threads: dataSource.threads,
-      posts: dataSource.posts,
-      users: dataSource.users,
+      forums: dataSource.forums,
     };
-  },
-
-  methods: {
-    postbyId(postId) {
-      return this.posts.find((p) => p.id === postId);
-    },
-    userById(userId) {
-      return this.users.find((u) => u.id === userId);
-    },
   },
 };
 </script>

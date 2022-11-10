@@ -18,9 +18,7 @@
             {{ post.text }}
           </p>
         </div>
-        <div class="post-date text-faded">
-          {{ post.publishedAt }}
-        </div>
+        <AppDate :time-stamp="post.publishedAt" />
       </div>
     </div>
   </div>
@@ -38,16 +36,11 @@ export default {
   },
   data() {
     return {
-      threads: dataSource.threads,
-      //   posts: dataSource.posts,
       users: dataSource.users,
     };
   },
 
   methods: {
-    postbyId(postId) {
-      return this.posts.find((p) => p.id === postId);
-    },
     userById(userId) {
       return this.users.find((u) => u.id === userId);
     },
