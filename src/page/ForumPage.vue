@@ -16,6 +16,7 @@
 <script>
 import ThreadListView from "../components/ThreadListView.vue";
 import dataSource from "../data.json";
+
 export default {
   components: { ThreadListView },
   props: {
@@ -24,6 +25,7 @@ export default {
       required: true,
     },
   },
+
   computed: {
     forum() {
       return dataSource.forums.find((forum) => forum.id === this.id);

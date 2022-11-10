@@ -1,20 +1,17 @@
 <template>
-  <!-- <ThreadListView :threads="threads" /> -->
-  <ForumList :forums="forums" />
+  <h1>Welcome to the forum</h1>
+  <CategoryList :categories="categories" />
 </template>
 
 <script>
-import dataSource from "../data.json";
-// import ThreadListView from "../components/ThreadListView.vue";
-import ForumList from "../components/ForumList.vue";
+import CategoryList from "../components/CategoryList.vue";
+import { mapState } from "vuex";
 
 export default {
-  components: { ForumList },
-  data() {
-    return {
-      threads: dataSource.threads,
-      forums: dataSource.forums,
-    };
+  components: { CategoryList },
+
+  computed: {
+    ...mapState(["categories"]),
   },
 };
 </script>

@@ -25,8 +25,7 @@
 </template>
 
 <script>
-import dataSource from "../data.json";
-
+import { mapState } from "vuex";
 export default {
   props: {
     posts: {
@@ -34,12 +33,9 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      users: dataSource.users,
-    };
+  computed: {
+    ...mapState(["users"]),
   },
-
   methods: {
     userById(userId) {
       return this.users.find((u) => u.id === userId);

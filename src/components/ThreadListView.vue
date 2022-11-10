@@ -38,24 +38,18 @@
 </template>
 
 <script>
-import dataSource from "../data.json";
-// import AppDate from "../components/AppDate.vue";
+import { mapState } from "vuex";
 
 export default {
-  // components: {
-  //   AppDate,
-  // },
   props: {
     threads: {
       type: Array,
       required: true,
     },
   },
-  data() {
-    return {
-      posts: dataSource.posts,
-      users: dataSource.users,
-    };
+
+  computed: {
+    ...mapState(["posts", "users"]),
   },
 
   methods: {
