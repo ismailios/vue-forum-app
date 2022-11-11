@@ -61,12 +61,12 @@
         />
       </div>
       <div class="form-group">
-        <label for="Location" class="form-label">Location</label>
+        <label for="twitter" class="form-label">twitter</label>
         <input
           type="text"
-          id="Location"
+          id="twitter"
           autocomplete="off"
-          v-model="activeUser.location"
+          v-model="activeUser.twitter"
           class="form-input"
         />
       </div>
@@ -77,31 +77,22 @@
     </form>
   </div>
 </template>
-<script>
-export default {
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      activeUser: { ...this.user },
-    };
-  },
-  mounted() {
-    console.log(this.activeUser);
-  },
-  methods: {
-    save() {
-      this.$store.dispatch("updateUser", {
-        user: this.activeUser,
-        userId: this.activeUser.id,
-      });
-      this.$emit("closeProfileEditor");
-    },
-  },
+<script setup lang="ts">
+import { User } from "@/types";
+import { ref } from "vue";
+import { useStore } from "vuex";
+const store = useStore();
+const props = defineProps<{ user: User }>();
+const emit = defineEmits<{ (e: "closeProfileEditor"): void }>();
+
+const activeUser = ref(props.user);
+
+const save = () => {
+  store.dispatch("updateUser", {
+    user: activeUser.value,
+    userId: activeUser.value.id,
+  });
+  emit("closeProfileEditor");
 };
 </script>
 <style></style>

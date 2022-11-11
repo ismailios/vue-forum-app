@@ -4,28 +4,21 @@
   </span>
 </template>
 
-<script>
+<script setup lang="ts">
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 
 dayjs.extend(relativeTime);
 dayjs.extend(localizedFormat);
-export default {
-  props: {
-    timeStamp: {
-      type: Number,
-      required: true,
-    },
-  },
-  methods: {
-    diffTime(timeStamp) {
-      return dayjs.unix(timeStamp).fromNow();
-    },
-    exactDate(timeStamp) {
-      return dayjs.unix(timeStamp).format("llll");
-    },
-  },
+
+defineProps<{ timeStamp: number }>();
+
+const diffTime = (timeStamp: number) => {
+  return dayjs.unix(timeStamp).fromNow();
+};
+const exactDate = (timeStamp: number) => {
+  return dayjs.unix(timeStamp).format("llll");
 };
 </script>
 

@@ -30,32 +30,25 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    forums: {
-      type: Array,
-      required: true,
-    },
-    title: {
-      type: String,
-      default: "Forums",
-    },
-    categoryId: {
-      type: String,
-      required: false,
-    },
-  },
-  methods: {
-    forumThreads(forum) {
-      if (forum.threads?.length) {
-        return forum.threads.length > 1 ? "threads" : "thread";
-      } else {
-        return "no threads";
-      }
-    },
-  },
-};
+<script setup lang="ts">
+import { Forum } from "@/types";
+import { computed } from "@vue/runtime-core";
+
+defineProps<{
+  forums: Forum[];
+  title: string;
+  categoryId?: string;
+}>();
+
+const forumThreads = computed(() => {
+  return (forum: Forum) => {
+    if (forum.threads?.length) {
+      return forum.threads.length > 1 ? "threads" : "thread";
+    } else {
+      return "no threads";
+    }
+  };
+});
 </script>
 
 <style lang="scss" scoped></style>

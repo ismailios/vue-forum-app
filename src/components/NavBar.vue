@@ -32,13 +32,10 @@
   </header>
 </template>
 
-<script>
-import { mapGetters } from "vuex";
-export default {
-  computed: {
-    ...mapGetters(["authUser"]),
-  },
-};
+<script setup lang="ts">
+import { useStore } from "vuex";
+const store = useStore();
+const authUser = store.getters.authUser;
 </script>
 
 <style lang="scss" scoped></style>
