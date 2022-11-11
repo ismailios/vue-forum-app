@@ -9,9 +9,10 @@
 </template>
 
 <script>
-import dataSource from "../data.json";
+// import dataSource from "../data.json";
 import PostList from "../components/PostList.vue";
 import PostEditor from "@/components/PostEditor.vue";
+import { mapState } from "vuex";
 
 export default {
   components: {
@@ -26,12 +27,13 @@ export default {
   },
   data() {
     return {
-      threads: dataSource.threads,
-      posts: dataSource.posts,
+      // threads: dataSource.threads,
+      // posts: dataSource.posts,
       newPost: "",
     };
   },
   computed: {
+    ...mapState(["threads", "posts"]),
     thread() {
       //Using Props (must add props:true in route)
       return this.threads.find((thread) => thread.id === this.id);

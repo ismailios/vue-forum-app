@@ -14,8 +14,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import ThreadListView from "../components/ThreadListView.vue";
-import dataSource from "../data.json";
 
 export default {
   components: { ThreadListView },
@@ -27,11 +27,14 @@ export default {
   },
 
   computed: {
+    ...mapState(["forums", "threads"]),
     forum() {
-      return dataSource.forums.find((forum) => forum.id === this.id);
+      return this.forums.find((forum) => forum.id === this.id);
     },
     threads() {
-      return dataSource.threads.filter((thread) => thread.forumId == this.id);
+      return this.$store.state.threads.filter(
+        (thread) => thread.forumId == this.id
+      );
     },
   },
 };

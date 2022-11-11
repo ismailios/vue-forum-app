@@ -11,13 +11,13 @@
     <nav class="navbar">
       <ul>
         <li class="navbar-user">
-          <a href="#" target="_blank">
+          <router-link :to="{ name: 'Profile' }">
             <img src="../assets/logo.png" alt="avatar" class="avatar-small" />
             <span
-              >ismail el maslouhy
+              >{{ authUser.name }}
               <img src="../assets/logo.png" alt="arrow" class="icon-profile"
             /></span>
-          </a>
+          </router-link>
           <div id="user-dropdown">
             <div class="triangle-drop">
               <ul class="dropdown-menu">
@@ -33,7 +33,12 @@
 </template>
 
 <script>
-export default {};
+import { mapGetters } from "vuex";
+export default {
+  computed: {
+    ...mapGetters(["authUser"]),
+  },
+};
 </script>
 
 <style lang="scss" scoped></style>
