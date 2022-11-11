@@ -4,11 +4,18 @@ import ForumPage from "@/page/ForumPage.vue"
 import NotFound from "@/page/NotFound.vue"
 import { createRouter, createWebHistory } from "vue-router"
 import CategoryPageVue from "@/page/CategoryPage.vue"
+import ProfilePageVue from "@/page/ProfilePage.vue"
 
 const routes = [{
     name: "Home",
     path: "/",
     component: HomePage
+},
+{
+    name: "Profile",
+    path: "/me",
+    component: ProfilePageVue,
+    props: true
 },
 {
     name: "Forum",
