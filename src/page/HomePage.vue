@@ -1,19 +1,17 @@
 <template>
-  <h1 class="push-top">Welcome to the forum</h1>
+  <div class="col-large">
+    <h1 class="push-top">Welcome to the forum</h1>
+  </div>
   <CategoryList :categories="categories" />
 </template>
 
-<script>
+<script setup lang="ts">
+import { computed } from "@vue/runtime-core";
+import { useStore } from "vuex";
 import CategoryList from "../components/CategoryList.vue";
-import { mapState } from "vuex";
+const store = useStore();
 
-export default {
-  components: { CategoryList },
-
-  computed: {
-    ...mapState(["categories"]),
-  },
-};
+const categories = computed(() => store.state.categories);
 </script>
 
 <style lang="scss" scoped></style>

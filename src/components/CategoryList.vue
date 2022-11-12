@@ -8,28 +8,22 @@
   />
 </template>
 
-<script>
+<script setup lang="ts">
+import { Category, Forum } from "@/types";
+import { computed } from "@vue/runtime-core";
+import { useStore } from "vuex";
 import ForumList from "../components/ForumList.vue";
-import { mapState } from "vuex";
-export default {
-  components: {
-    ForumList,
-  },
-  props: {
-    categories: {
-      type: Array,
-      required: true,
-    },
-  },
-  computed: {
-    ...mapState(["forums"]),
-  },
-  methods: {
-    getForumsCategory(category) {
-      return this.forums.filter((forum) => forum.categoryId === category.id);
-    },
-  },
-};
+
+const store = useStore();
+
+defineProps<{ categories: Category[] }>();
+
+const getForumsCategory = computed(() => {
+  return (category: Category) =>
+    store.state.forums.filter(
+      (forum: Forum) => forum.categoryId === category.id
+    );
+});
 </script>
 
 <style lang="scss" scoped></style>

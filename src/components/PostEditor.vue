@@ -17,28 +17,26 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      text: "",
-    };
-  },
+<script setup lang="ts">
+import { Post } from "@/types";
+import { ref } from "vue";
 
-  methods: {
-    save() {
-      const postId = "dhdhdd" + Math.random();
-      const post = {
-        id: postId,
-        publishedAt: Math.floor(Date.now() / 1000),
-        text: this.text,
-        userId: "ALXhxjwgY9PinwNGHpfai6OWyDu2",
-      };
-      this.text = "";
-      this.$emit("save", { post });
-    },
-  },
-};
+const emit = defineEmits<{
+  (e: "save", { post }: { post: Post }): void;
+}>();
+
+const text = ref("");
+function save() {
+  const postId = "dhdhdd" + Math.random();
+  const post = {
+    id: postId,
+    publishedAt: Math.floor(Date.now() / 1000),
+    text: text.value,
+    userId: "ALXhxjwgY9PinwNGHpfai6OWyDu2",
+  };
+  text.value = "";
+  emit("save", { post });
+}
 </script>
 
 <style lang="scss" scoped></style>

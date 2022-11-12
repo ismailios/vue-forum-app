@@ -1,3 +1,4 @@
+
 import { createApp } from 'vue'
 import App from './App.vue'
 import { router } from './routes'
@@ -13,16 +14,14 @@ const requireComponent = require.context(
     false,
     /App[A-Z]\w+\.(vue|js)$/
 )
-
+//TODO : types
 requireComponent.keys().forEach(fileName => {
     const componentConfig = requireComponent(fileName)
     const componentName =
-        fileName
-            .split('/')
-            .pop()
-            .replace(/\.\w+$/, '')
+        fileName?.split('/')?.pop()
+            ?.replace(/\.\w+$/, '')
     app.component(
-        componentName,
+        componentName || "",
         componentConfig.default || componentConfig
     )
 })

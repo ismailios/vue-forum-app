@@ -1,18 +1,22 @@
+import { StoreShape } from '@/types';
 import { createStore } from 'vuex'
 import dataSource from "../data.json";
+
+
+
 const store = createStore({
-    state() {
+    state(): StoreShape {
         return {
             threads: dataSource.threads,
             forums: dataSource.forums,
             categories: dataSource.categories,
             users: dataSource.users,
             posts: dataSource.posts,
-            authId: "7uVPJS9GHoftN58Z2MXCYDqmNAh2"
+            authId: "ALXhxjwgY9PinwNGHpfai6OWyDu2"
         }
     },
     getters: {
-        authUser: (state) => {
+        authUser: (state: StoreShape) => {
             const user = state.users.find((user) => user.id === state.authId)
             if (!user) return null
             return {
@@ -35,7 +39,6 @@ const store = createStore({
     },
     actions: {
         createPost(context, post) {
-            console.log("postff", post)
             post.id = "dddddezdezdd" + Math.random()
             context.commit("setPost", { post })
             context.commit("appendPostToThread", {
@@ -53,7 +56,10 @@ const store = createStore({
         },
         appendPostToThread(state, { postId, threadId }) {
             const thread = state.threads.find((thread) => thread.id === threadId)
-            thread.posts.push(postId)
+            if (thread) {
+                thread.posts.push(postId)
+            }
+
         },
         setUser(state, { user, userId }) {
             const userIndex = state.users.findIndex((user) => user.id === userId)

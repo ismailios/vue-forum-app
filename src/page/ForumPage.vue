@@ -13,31 +13,23 @@
   </div>
 </template>
 
-<script>
-import { mapState } from "vuex";
+<script setup lang="ts">
+import { Forum, Thread } from "@/types";
+import { computed } from "@vue/runtime-core";
+import { useStore } from "vuex";
 import ThreadListView from "../components/ThreadListView.vue";
 
-export default {
-  components: { ThreadListView },
-  props: {
-    id: {
-      type: String,
-      required: true,
-    },
-  },
+const store = useStore();
+const props = defineProps<{ id: String }>();
 
-  computed: {
-    ...mapState(["forums", "threads"]),
-    forum() {
-      return this.forums.find((forum) => forum.id === this.id);
-    },
-    threads() {
-      return this.$store.state.threads.filter(
-        (thread) => thread.forumId == this.id
-      );
-    },
-  },
-};
+const forum = computed(() => {
+  return store.state.forums.find((forum: Forum) => forum.id === props.id);
+});
+const threads = computed(() => {
+  return store.state.threads.filter(
+    (thread: Thread) => thread.forumId == props.id
+  );
+});
 </script>
 
 <style lang="scss" scoped></style>

@@ -24,24 +24,19 @@
   </div>
 </template>
 
-<script>
-import { mapState } from "vuex";
-export default {
-  props: {
-    posts: {
-      type: Array,
-      required: true,
-    },
-  },
-  computed: {
-    ...mapState(["users"]),
-  },
-  methods: {
-    userById(userId) {
-      return this.users.find((u) => u.id === userId);
-    },
-  },
-};
+<script setup lang="ts">
+import { Post, User } from "@/types";
+import { useStore } from "vuex";
+import { computed } from "@vue/runtime-core";
+const store = useStore();
+
+defineProps<{ posts: Post[] }>();
+
+const userById = computed(() => {
+  return (userId: string) => {
+    return store.state.users.find((user: User) => user.id === userId);
+  };
+});
 </script>
 
 <style lang="scss" scoped></style>

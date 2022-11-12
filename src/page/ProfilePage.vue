@@ -28,33 +28,18 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import PostList from "../components/PostList.vue";
 import UserProfileCard from "@/components/UserProfileCard.vue";
 import UserProfileEditor from "@/components/UserProfileEditor.vue";
+import { ref } from "vue";
+import { computed } from "@vue/runtime-core";
+import { useStore } from "vuex";
 
-import { mapGetters } from "vuex";
+const store = useStore();
+const isEdit = ref(false);
 
-export default {
-  components: {
-    PostList,
-    UserProfileCard,
-    UserProfileEditor,
-  },
-  data() {
-    return {
-      isEdit: false,
-    };
-  },
-  methods: {
-    toggleEdit() {
-      this.isEdit = !this.isEdit;
-    },
-  },
-  computed: {
-    ...mapGetters({ user: "authUser" }),
-  },
-};
+const user = computed(() => store.getters.authUser);
 </script>
 
 <style lang="scss" scoped></style>
