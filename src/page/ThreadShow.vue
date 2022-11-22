@@ -8,50 +8,30 @@
   <div v-else class="col-full text-center">no thread found</div>
 </template>
 
-<script>
-// import dataSource from "../data.json";
+<script setup>
 import PostList from "../components/PostList.vue";
 import PostEditor from "@/components/PostEditor.vue";
-import { mapState } from "vuex";
+import { useStore } from "vuex";
+import { computed } from "@vue/runtime-core";
 
-export default {
-  components: {
-    PostList,
-    PostEditor,
+const store = useStore();
+
+const props = defineProps({
+  id: {
+    type: String,
   },
-  props: {
-    id: {
-      type: String,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      // threads: dataSource.threads,
-      // posts: dataSource.posts,
-      newPost: "",
-    };
-  },
-  computed: {
-    ...mapState(["threads", "posts"]),
-    thread() {
-      //Using Props (must add props:true in route)
-      return this.threads.find((thread) => thread.id === this.id);
-      //Using $route.params.id
-      //   return this.threads.find((thread) => thread.id === this.$route.params.id);
-    },
-    threadPosts() {
-      return this.posts.filter((p) => p.threadId === this.id);
-    },
-  },
-  methods: {
-    addPost({ post }) {
-      post.threadId = this.id;
-      // this.posts.push(post);
-      // this.thread.posts.push(post.id);
-      this.$store.dispatch("createPost", post);
-    },
-  },
+});
+
+const thread = computed(() => {
+  return store.state.threads.items.find((thread) => thread.id === props.id);
+});
+const threadPosts = computed(() => {
+  return store.state.posts.items.filter((post) => post.threadId === props.id);
+});
+
+const addPost = ({ post }) => {
+  post.threadId = props.id;
+  store.dispatch("posts/createPost", post);
 };
 </script>
 

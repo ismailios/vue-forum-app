@@ -12,20 +12,20 @@
             >
           </p>
           <p class="text-faded text-xsmall">
-            By <a href="">{{ userById(thread.userId).name }}</a
+            By <a href="">{{ userById(thread.userId)?.name }}</a
             >, <AppDate :time-stamp="thread.publishedAt" />
           </p>
         </div>
         <div class="activity">
           <p class="replies-count">{{ thread.posts.length }} replies</p>
           <img
-            :src="userById(thread.userId).avatar"
+            :src="userById(thread.userId)?.avatar"
             alt="user avatar"
             class="avatar-medium"
           />
           <div>
             <p class="text-xsmall">
-              By <a href="#">{{ userById(thread.userId).name }}</a>
+              By <a href="#">{{ userById(thread.userId)?.name }}</a>
             </p>
             <div class="text-faded text-xsmall">
               <AppDate :time-stamp="thread.publishedAt" />
@@ -37,30 +37,23 @@
   </div>
 </template>
 
-<script>
-import { mapState } from "vuex";
+<script setup>
+import { computed } from "@vue/runtime-core";
+import { useStore } from "vuex";
 
-export default {
-  props: {
-    threads: {
-      type: Array,
-      required: true,
-    },
+const { state } = useStore();
+defineProps({
+  threads: {
+    type: Array,
+    required: true,
   },
+});
 
-  computed: {
-    ...mapState(["posts", "users"]),
-  },
-
-  methods: {
-    postbyId(postId) {
-      return this.posts.find((p) => p.id === postId);
-    },
-    userById(userId) {
-      return this.users.find((u) => u.id === userId);
-    },
-  },
-};
+const userById = computed(() => {
+  return (userId) => {
+    return state.users.items.find((user) => user.id === userId);
+  };
+});
 </script>
 
 <style lang="scss" scoped></style>

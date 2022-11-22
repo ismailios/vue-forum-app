@@ -13,21 +13,19 @@
     </div>
     <hr />
     <p class="text-large text-center">
-      <i class="fa fa-globe"></i>
+      <i class="fa fa-globe" aria-hidden="true"></i>
       <a :href="user.website">{{ user.website }}</a>
     </p>
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
+<script setup>
+defineProps({
+  user: {
+    type: Object,
+    required: true,
   },
-};
+});
 </script>
 
 <style lang="scss" scoped></style>

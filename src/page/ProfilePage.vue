@@ -1,19 +1,18 @@
 <template>
   <div class="container">
-    <div class="flex-grid">
-      <div class="col-3 push-top">
-        <UserProfileCard :user="user" />
-        <user-profile-editor
-          @closeProfileEditor="isEdit = !isEdit"
-          :user="user"
-          v-if="isEdit"
-        />
+    <div class="flex-grid" v-if="user">
+      <div class="push-top">
+        <UserProfileCard v-if="!edit" :user="user" />
+        <user-profile-editor :user="user" v-else />
         <p class="text-xsmall text-faded text-center">member since june ...</p>
         <div class="text-center">
           <hr />
-          <button @click="isEdit = !isEdit" class="btn-green btn-small">
-            Edit profile
-          </button>
+          <router-link
+            :to="{ name: 'ProfileEdit' }"
+            class="btn-green btn-small"
+          >
+            Edit Profile
+          </router-link>
         </div>
         <div class="col-7 push-top">
           <div class="profile-header">
@@ -28,33 +27,19 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import PostList from "../components/PostList.vue";
 import UserProfileCard from "@/components/UserProfileCard.vue";
 import UserProfileEditor from "@/components/UserProfileEditor.vue";
+import { useStore } from "vuex";
+import { computed } from "@vue/runtime-core";
 
-import { mapGetters } from "vuex";
+const store = useStore();
+defineProps({
+  edit: { type: Boolean, default: false },
+});
 
-export default {
-  components: {
-    PostList,
-    UserProfileCard,
-    UserProfileEditor,
-  },
-  data() {
-    return {
-      isEdit: false,
-    };
-  },
-  methods: {
-    toggleEdit() {
-      this.isEdit = !this.isEdit;
-    },
-  },
-  computed: {
-    ...mapGetters({ user: "authUser" }),
-  },
-};
+const user = computed(() => store.getters["auth/authUser"]);
 </script>
 
 <style lang="scss" scoped></style>

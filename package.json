@@ -10,6 +10,10 @@
   "dependencies": {
     "core-js": "^3.8.3",
     "dayjs": "^1.11.6",
+    "firebase": "^9.14.0",
+    "node-sass": "^8.0.0",
+    "nprogress": "^0.2.0",
+    "sass-loader": "^13.2.0",
     "vue": "^3.2.13",
     "vue-router": "^4.1.6",
     "vuex": "^4.1.0"
@@ -26,7 +30,8 @@
   "eslintConfig": {
     "root": true,
     "env": {
-      "node": true
+      "node": true,
+      "vue/setup-compiler-macros": true
     },
     "extends": [
       "plugin:vue/vue3-essential",

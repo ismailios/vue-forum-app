@@ -1,15 +1,19 @@
 <template>
   <nav-bar />
-  <div class="contain">
+  <div class="container">
     <router-view />
   </div>
 </template>
 
-<script>
+<script setup>
+import { useStore } from "vuex";
 import NavBar from "./components/NavBar.vue";
-export default {
-  components: { NavBar },
-};
+const store = useStore();
+store.dispatch("categories/fetchCategories");
+store.dispatch("forums/fetchForums");
+store.dispatch("threads/fetchThreads");
+store.dispatch("users/fetchUsers");
+store.dispatch("posts/fetchPosts");
 </script>
 
 <style>

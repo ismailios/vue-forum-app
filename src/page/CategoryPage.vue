@@ -5,35 +5,31 @@
   <ForumList :title="category.name" :forums="getForumsCategory(category)" />
 </template>
 
-<script>
-import { mapState } from "vuex";
-import ForumList from "../components/ForumList.vue";
-import dataSource from "../data.json";
-export default {
-  components: {
-    ForumList,
-  },
-  props: {
-    id: {
-      required: true,
-      type: String,
-    },
-  },
+<script setup>
+import ForumList from "@/components/ForumList.vue";
+import { computed } from "@vue/runtime-core";
+import { useStore } from "vuex";
 
-  computed: {
-    ...mapState(["categories"]),
-    category() {
-      return this.categories.find((categorie) => categorie.id === this.id);
-    },
+const store = useStore();
+
+const props = defineProps({
+  id: {
+    type: String,
   },
-  methods: {
-    getForumsCategory(category) {
-      return dataSource.forums.filter(
-        (forum) => forum.categoryId === category.id
-      );
-    },
-  },
-};
+});
+
+const category = computed(() => {
+  return store.state.categories.items.find(
+    (categorie) => categorie.id === props.id
+  );
+});
+
+const getForumsCategory = computed(() => {
+  return (category) =>
+    store.state.forums.items.filter(
+      (forum) => forum.categoryId === category.id
+    );
+});
 </script>
 
 <style lang="scss" scoped></style>

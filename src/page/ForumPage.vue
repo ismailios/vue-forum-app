@@ -5,7 +5,11 @@
         <h1>{{ forum.name }}</h1>
         <p class="text-lead">{{ forum.description }}</p>
       </div>
-      <a href="#" class="btn-green btn-small">Start a new Thread</a>
+      <router-link
+        :to="{ name: 'ThreadCreate', params: { forumId: forum.id } }"
+      >
+        <a href="#" class="btn-green btn-small">Start a new Thread</a>
+      </router-link>
     </div>
   </div>
   <div class="col-full push-top">
@@ -13,31 +17,26 @@
   </div>
 </template>
 
-<script>
-import { mapState } from "vuex";
+<script setup>
+import { computed } from "@vue/runtime-core";
+import { useStore } from "vuex";
 import ThreadListView from "../components/ThreadListView.vue";
 
-export default {
-  components: { ThreadListView },
-  props: {
-    id: {
-      type: String,
-      required: true,
-    },
+const store = useStore();
+const props = defineProps({
+  id: {
+    type: String,
   },
+});
 
-  computed: {
-    ...mapState(["forums", "threads"]),
-    forum() {
-      return this.forums.find((forum) => forum.id === this.id);
-    },
-    threads() {
-      return this.$store.state.threads.filter(
-        (thread) => thread.forumId == this.id
-      );
-    },
-  },
-};
+const forum = computed(() => {
+  return store.state.forums.items.find((forum) => forum.id === props.id);
+});
+const threads = computed(() => {
+  return store.state.threads.items.filter(
+    (thread) => thread.forumId == props.id
+  );
+});
 </script>
 
 <style lang="scss" scoped></style>
