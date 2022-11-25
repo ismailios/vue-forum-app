@@ -19,11 +19,11 @@ export default {
             await updateDoc(threadsPostRef, {
                 posts: arrayUnion(docRef.id)
             });
-            // context.commit("setPost", { post })
-            // context.commit("threads/appendPostToThread", {
-            //     postId: post.id,
-            //     threadId: post.threadId
-            // }, { root: true })
+            context.commit("setPost", { post })
+            context.commit("threads/appendPostToThread", {
+                postId: post.id,
+                threadId: post.threadId
+            }, { root: true })
         },
         updateUser({ commit }, { user, userId }) {
             commit("setUser", { user, userId })

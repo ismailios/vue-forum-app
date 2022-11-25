@@ -48,15 +48,6 @@ export default {
         fetchAuthUser: async ({ commit }) => {
             const userId = auth.currentUser?.uid
             if (!userId) return
-            // await dispatch('fetchItem', {
-            //     resource: 'users',
-            //     id: userId,
-            //     handleUnsubscribe: (unsubscribe) => {
-            //         commit('setAuthUserUnsubscribe', unsubscribe)
-            //     }
-            // },
-            //     { root: true }
-            // )
             commit('setAuthId', userId)
         },
 

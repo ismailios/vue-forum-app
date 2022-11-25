@@ -29,14 +29,7 @@ export default {
             });
 
             await dispatch('posts/createPost', { text: content, threadId: docRef.id }, { root: true })
-
             return state.items.find((thread) => thread.id == docRef.id)
-
-
-            // commit('users/appendThreadToUser', { parentId: userId, childId: threadRef.id }, { root: true })
-            // commit('forums/appendThreadToForum', { parentId: forumId, childId: threadRef.id }, { root: true })
-            // await dispatch('posts/createPost', { text, threadId: threadRef.id, firstInThread: true }, { root: true })
-            // return findById(state.items, threadRef.id)
         },
 
     },
@@ -44,12 +37,12 @@ export default {
         setItems(state, threads) {
             state.items = threads
         },
-        // appendPostToThread(state, { postId, threadId }) {
-        //     const thread = state.items.find((thread) => thread.id === threadId)
-        //     if (thread) {
-        //         thread.posts.push(postId)
-        //     }
+        appendPostToThread(state, { postId, threadId }) {
+            const thread = state.items.find((thread) => thread.id === threadId)
+            if (thread) {
+                thread.posts.push(postId)
+            }
 
-        // },
+        },
     }
 }
